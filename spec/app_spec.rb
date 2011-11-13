@@ -33,8 +33,23 @@ describe "Twitter Info" do
   ##
   # this spec needs to be written.
   #
-  it "should display the user's follower count for any valid username"
-
+  it "should display the user's follower count for any valid username" do
+    
+	get "/user/burtlo"
+	
+	last_response.status.should == 200
+	# the response body includes the number of followers, but how do i extract
+	# it and then test it?
+	# get the response body, parse it for my "number of followers: x" and pull
+	# out the x, then compare to should be_within?
+	# this doesn't quite work- i forgot the whole body is returned.
+	# would need to loop though body line by line looking for "Number of..." 
+	# and then pull that out plus ditch anything between <>.  this seems like
+	# its too complicated for a test...
+	num_followers =	last_response.body.delete("Number of Followers: ")
+	puts num_followers
+	num_followers.to_i.should be_within(1000,0)
+  end	
 
 
   ##
@@ -48,7 +63,13 @@ describe "Twitter Info" do
   #
   # when that happens, return a new template file named 404.haml
   #
-  it "should return a custom 404 page when the username cannot be found"
+  it "should return a custom 404 page when the username cannot be found" do
+  
+    get "/user/jseryapdj377"
+	
+	last_response.status.should == 404
+	last_response.body.should match(/my custom 404/) 
+  end
 
 
 end
