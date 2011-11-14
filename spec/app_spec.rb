@@ -74,6 +74,14 @@ describe "Twitter Info" do
 	last_response.status.should == 404
 	last_response.body.should match(/my custom 404/) 
   end
+  
+  ## my spec
+  it "should return a location for the user" do
+    get "/user/butlo/location"
+	
+    last_response.status.should == 200
+	last_response.body.should match(/location/)
+  end
 
 
 end

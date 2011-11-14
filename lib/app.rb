@@ -29,6 +29,12 @@ class TwitterInfo < Sinatra::Application
 	end  
   end
 
+  get '/user/:username/location' do
+    @user = params[:username]
+	user_id = Twitter.user(@user).id
+	@location = Twitter.user("#{@user}").location
+	haml :location
+  end
   post // do
     halt 500, 'Whoa. Sorry. No POSTs allowed.'
   end
